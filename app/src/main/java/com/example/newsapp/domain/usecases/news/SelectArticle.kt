@@ -1,13 +1,13 @@
 package com.example.newsapp.domain.usecases.news
 
-import com.example.newsapp.data.local.NewsDao
 import com.example.newsapp.domain.models.Article
+import com.example.newsapp.domain.repository.NewsRepository
 
 class SelectArticle(
-    private val newsDao: NewsDao
+    private val newsRepository: NewsRepository
 ) {
 
     suspend operator fun invoke(url: String): Article? {
-        return newsDao.getArticle(url)
+        return newsRepository.selectArticle(url)
     }
 }
