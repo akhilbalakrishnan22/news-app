@@ -45,7 +45,7 @@ fun HomeScreen(
         derivedStateOf {
             if (articles.itemCount > 10) {
                 articles.itemSnapshotList.items.slice(IntRange(start = 0, endInclusive = 9))
-                    .joinToString(separator = "\uD83d\uDFE5") { it.title }
+                    .joinToString(separator = " \uD83D\uDD34 ") { it.title }
             } else {
                 ""
             }
@@ -87,7 +87,7 @@ fun HomeScreen(
                     value = scrollState.maxValue,
                     animationSpec = infiniteRepeatable(
                         tween(
-                            durationMillis = (scrollState.maxValue - scrollState.value) * 50_000 / scrollState.maxValue,
+                            durationMillis = (scrollState.maxValue - scrollState.value) * 80_000 / scrollState.maxValue,
                             easing = LinearEasing,
                             delayMillis = 2000
                         )

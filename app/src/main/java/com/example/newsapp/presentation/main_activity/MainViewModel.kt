@@ -1,4 +1,4 @@
-package com.example.newsapp
+package com.example.newsapp.presentation.main_activity
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
