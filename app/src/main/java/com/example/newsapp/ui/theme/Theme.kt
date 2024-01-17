@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
+// Jetpack compose application theme
 private val DarkColorScheme = darkColorScheme(
     primary = Blue,
     background = Black,

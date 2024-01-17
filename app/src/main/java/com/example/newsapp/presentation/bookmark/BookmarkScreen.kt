@@ -1,3 +1,7 @@
+/*
+ * This file is part of the NewsApp application.
+ * It defines the UI components for displaying the Bookmark screen. The Bookmark screen shows a list of bookmarked articles.
+ */
 package com.example.newsapp.presentation.bookmark
 
 import androidx.compose.foundation.layout.Column
@@ -17,6 +21,12 @@ import com.example.newsapp.domain.models.Article
 import com.example.newsapp.presentation.Dimens.MediumPadding1
 import com.example.newsapp.presentation.common.ArticlesList
 
+/**
+ * Composable function to display the Bookmark screen.
+ *
+ * @param state The state representing the Bookmark screen.
+ * @param navigateToDetails Callback function to navigate to the details screen for an article.
+ */
 @Composable
 fun BookmarkScreen(
     state: BookmarkState,

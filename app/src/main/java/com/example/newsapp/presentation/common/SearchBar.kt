@@ -1,3 +1,8 @@
+/*
+ * This file is part of the NewsApp application.
+ * It defines the SearchBar composable function, responsible for rendering a search bar for searching
+ * articles.
+ */
 package com.example.newsapp.presentation.common
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
@@ -31,6 +36,16 @@ import com.example.newsapp.R
 import com.example.newsapp.presentation.Dimens.IconSize
 import com.example.newsapp.ui.theme.NewsAppTheme
 
+/**
+ * Composable function for rendering a search bar with optional search icon and border.
+ *
+ * @param modifier The modifier for the search bar.
+ * @param text The current text value of the search bar.
+ * @param readOnly A flag indicating whether the search bar is read-only or not.
+ * @param onClick An optional callback to be invoked when the search bar is clicked.
+ * @param onValueChange A callback to be invoked when the text value of the search bar changes.
+ * @param onSearch A callback to be invoked when the search action is triggered.
+ */
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,
@@ -40,10 +55,12 @@ fun SearchBar(
     onValueChange: (String) -> Unit,
     onSearch: () -> Unit
 ) {
+    // Create a MutableInteractionSource to detect click interactions
     val interactionSource = remember {
         MutableInteractionSource()
     }
 
+    // Collect the isPressed state using LaunchedEffect to trigger onClick callback
     val isClicked = interactionSource.collectIsPressedAsState().value
     LaunchedEffect(key1 = isClicked) {
         if (isClicked) {
@@ -95,6 +112,9 @@ fun SearchBar(
     }
 }
 
+/**
+ * Modifier extension function to add a border to the search bar when not in dark mode.
+ */
 fun Modifier.searchBarBorder() = composed {
     if (!isSystemInDarkTheme()) {
         border(

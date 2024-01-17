@@ -1,3 +1,7 @@
+/*
+ * This file is part of the NewsApp application.
+ * It defines the OnBoardingPage composable, responsible for rendering individual onboarding pages.
+ */
 package com.example.newsapp.presentation.onboarding.components
 
 import android.content.res.Configuration
@@ -25,6 +29,12 @@ import com.example.newsapp.presentation.onboarding.Page
 import com.example.newsapp.presentation.onboarding.pages
 import com.example.newsapp.ui.theme.NewsAppTheme
 
+/**
+ * Composable function representing an individual onboarding page.
+ *
+ * @param modifier The modifier for styling and layout customization.
+ * @param page The data class representing the content of the onboarding page.
+ */
 @Composable
 fun OnBoardingPage(
     modifier: Modifier = Modifier,

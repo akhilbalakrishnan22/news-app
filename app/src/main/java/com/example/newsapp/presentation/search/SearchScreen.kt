@@ -1,3 +1,7 @@
+/*
+ * This file is part of the NewsApp application.
+ * It defines the SearchScreen composable function, responsible for rendering the search screen UI.
+ */
 package com.example.newsapp.presentation.search
 
 import androidx.compose.foundation.layout.Column
@@ -14,6 +18,13 @@ import com.example.newsapp.presentation.Dimens.MediumPadding1
 import com.example.newsapp.presentation.common.ArticlesList
 import com.example.newsapp.presentation.common.SearchBar
 
+/**
+ * Composable function for rendering the search screen UI.
+ *
+ * @param state The current state of the search screen.
+ * @param event The function to handle search-related events triggered by user interactions.
+ * @param navigateToDetails The function to navigate to the details screen when an article is clicked.
+ */
 @Composable
 fun SearchScreen(
     state: SearchState,
@@ -37,6 +48,7 @@ fun SearchScreen(
             onSearch = { event(SearchEvent.SearchNews) }
         )
         Spacer(modifier = Modifier.height(MediumPadding1))
+
         state.articles?.let {
             val articles = it.collectAsLazyPagingItems()
             ArticlesList(

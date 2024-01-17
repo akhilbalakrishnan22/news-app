@@ -1,3 +1,7 @@
+/*
+ * This file is part of the NewsApp application.
+ * It defines the Modifier extension function to add shimmer effect to composable elements.
+ */
 package com.example.newsapp.presentation.common
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
@@ -32,7 +36,13 @@ import com.example.newsapp.presentation.Dimens.ExtraSmallPadding
 import com.example.newsapp.presentation.Dimens.MediumPadding1
 import com.example.newsapp.ui.theme.NewsAppTheme
 
+/**
+ * Modifier extension function to apply a shimmer effect with a rounded rectangle background.
+ *
+ * @param cornerRadius The corner radius for the rounded rectangle.
+ */
 fun Modifier.shimmerEffect(cornerRadius: CornerRadius = CornerRadius(x = 12f, y = 12f)) = composed {
+    // Create an infinite transition to animate the transparency of the background color
     val transition = rememberInfiniteTransition("shimmer effect")
     val alpha = transition.animateFloat(
         initialValue = 0.2f,
@@ -43,7 +53,10 @@ fun Modifier.shimmerEffect(cornerRadius: CornerRadius = CornerRadius(x = 12f, y 
         ),
         label = "transparency of the background color"
     ).value
+    // Create a color with the shimmer effect based on the alpha value
     val color = colorResource(id = R.color.shimmer).copy(alpha = alpha)
+
+    // Draw a rounded rectangle with the specified corner radius and shimmering color
     drawBehind {
         drawRoundRect(
             color = color,
@@ -52,6 +65,11 @@ fun Modifier.shimmerEffect(cornerRadius: CornerRadius = CornerRadius(x = 12f, y 
     }
 }
 
+/**
+ * Composable function to render a shimmer effect for an article card.
+ *
+ * @param modifier The modifier for the shimmer effect.
+ */
 @Composable
 fun ArticleCardShimmerEffect(modifier: Modifier = Modifier) {
     Row(modifier = modifier) {

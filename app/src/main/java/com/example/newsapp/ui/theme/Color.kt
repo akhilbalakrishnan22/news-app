@@ -2,7 +2,7 @@ package com.example.newsapp.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-
+// Application colors
 val Black = Color(0xFF1C1E21) //Dark Background
 val Blue = Color(0xFF1877F2) //Primary
 

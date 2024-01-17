@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Applications colors used in night mode -->
     <color name="display_small">#FFFFFFFF</color>
     <color name="text_medium">#FFB0B3B8</color>
     <color name="text_title">#E4E6EB</color>

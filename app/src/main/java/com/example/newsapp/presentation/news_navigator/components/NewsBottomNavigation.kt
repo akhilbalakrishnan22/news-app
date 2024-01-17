@@ -1,3 +1,7 @@
+/*
+ * This file is part of the NewsApp application.
+ * It defines the UI components for displaying the bottom navigation bar for navigating with in the app.
+ */
 package com.example.newsapp.presentation.news_navigator.components
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
@@ -26,6 +30,24 @@ import com.example.newsapp.presentation.Dimens.ExtraSmallPadding2
 import com.example.newsapp.presentation.Dimens.IconSize
 import com.example.newsapp.ui.theme.NewsAppTheme
 
+/**
+ * Data class representing a single item in the bottom navigation bar.
+ *
+ * @param icon Drawable resource ID for the icon.
+ * @param text Text label for the navigation item.
+ */
+data class BottomNavigationItem(
+    @DrawableRes val icon: Int,
+    val text: String
+)
+
+/**
+ * Composable function representing the custom bottom navigation bar for the news section.
+ *
+ * @param items List of [BottomNavigationItem] representing the navigation items.
+ * @param selected Index of the currently selected item.
+ * @param onItemClick Callback function invoked when a navigation item is clicked.
+ */
 @Composable
 fun NewsBottomNavigation(
     items: List<BottomNavigationItem>,
@@ -66,11 +88,6 @@ fun NewsBottomNavigation(
         }
     }
 }
-
-data class BottomNavigationItem(
-    @DrawableRes val icon: Int,
-    val text: String
-)
 
 @Preview(showBackground = true)
 @Preview(uiMode = UI_MODE_NIGHT_YES, showBackground = true)

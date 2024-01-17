@@ -1,3 +1,7 @@
+/*
+ * This file is part of the NewsApp application.
+ * It defines custom-styled buttons used in the app.
+ */
 package com.example.newsapp.presentation.common
 
 import android.content.res.Configuration
@@ -17,6 +21,12 @@ import androidx.compose.ui.unit.dp
 import com.example.newsapp.ui.theme.NewsAppTheme
 import com.example.newsapp.ui.theme.WhiteGray
 
+/**
+ * Composable function for a custom-styled primary button.
+ *
+ * @param text The text to be displayed on the button.
+ * @param onClick The callback function to be executed when the button is clicked.
+ */
 @Composable
 fun NewsButton(
     text: String,
@@ -37,6 +47,12 @@ fun NewsButton(
     }
 }
 
+/**
+ * Composable function for a custom-styled text button.
+ *
+ * @param text The text to be displayed on the button.
+ * @param onClick The callback function to be executed when the button is clicked.
+ */
 @Composable
 fun NewsTextButton(
     text: String,

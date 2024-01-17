@@ -1,3 +1,7 @@
+/*
+ * This file is part of the NewsApp application.
+ * It defines the OnBoardingScreen composable, responsible for rendering the onboarding screen UI.
+ */
 package com.example.newsapp.presentation.onboarding
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
@@ -30,16 +34,24 @@ import com.example.newsapp.presentation.onboarding.components.PageIndicator
 import com.example.newsapp.ui.theme.NewsAppTheme
 import kotlinx.coroutines.launch
 
+/**
+ * Composable function representing the Onboarding screen of the NewsApp application.
+ *
+ * @param event A lambda function that takes an [OnBoardingEvent] as a parameter and triggers the corresponding action.
+ */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnBoardingScreen(
     event: (OnBoardingEvent) -> Unit
 ) {
+    // Column containing the entire onboarding screen UI
     Column(modifier = Modifier.fillMaxSize()) {
+        // Pager state to manage horizontal scrolling through onboarding pages
         val pagerState = rememberPagerState(initialPage = 0) {
             pages.size
         }
 
+        // Derived state to dynamically calculate button text based on the current page
         val buttonState = remember {
             derivedStateOf {
                 when (pagerState.currentPage) {
@@ -51,11 +63,13 @@ fun OnBoardingScreen(
             }
         }
 
+        // HorizontalPager to display onboarding pages
         HorizontalPager(state = pagerState) { index ->
             OnBoardingPage(page = pages[index])
         }
         Spacer(modifier = Modifier.weight(1f))
 
+        // Row containing page indicator and navigation buttons
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -64,6 +78,7 @@ fun OnBoardingScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // Page indicator displaying the current page
             PageIndicator(
                 modifier = Modifier.width(PageIndicatorWidth),
                 pageSize = pages.size,
@@ -73,16 +88,20 @@ fun OnBoardingScreen(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 val scope = rememberCoroutineScope()
                 if (buttonState.value[0].isNotEmpty()) {
+                    // Back button if applicable
                     NewsTextButton(text = buttonState.value[0], onClick = {
+                        // Scroll to the previous page using a coroutine scope
                         scope.launch {
                             pagerState.animateScrollToPage(page = pagerState.currentPage - 1)
                         }
                     })
                 }
 
+                // Next or Get Started button
                 NewsButton(
                     text = buttonState.value[1],
                     onClick = {
+                        // Scroll to the next page or trigger the save event for the last page
                         scope.launch {
                             if (pagerState.currentPage == 2) {
                                 event(OnBoardingEvent.SaveAppEntry)
@@ -98,6 +117,10 @@ fun OnBoardingScreen(
     }
 }
 
+/*
+ * Preview function for the OnBoardingScreen composable.
+ * It shows the onboarding screen UI in both light and dark modes.
+ */
 @Preview(showBackground = true)
 @Preview(uiMode = UI_MODE_NIGHT_YES, showBackground = true)
 @Composable

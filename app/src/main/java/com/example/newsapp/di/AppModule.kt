@@ -1,3 +1,7 @@
+/**
+ * This file is part of the NewsApp application.
+ * It defines list of functions for providing dependency injection for NewsApp.
+ */
 package com.example.newsapp.di
 
 import android.app.Application
@@ -30,16 +34,36 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+/**
+ * The @Module annotation represents it as Dagger Hilt module providing dependency injections for the News App.
+ *
+ * The @InstallIn is an annotation in Dagger Hilt that is used to specify the Hilt component where a Dagger Hilt
+ * module should be installed. It takes a single argument
+ * @param SingletonComponent::class Indicates that the module's bindings should be available throughout the entire
+ * application and are scoped to the application's lifecycle.
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    /**
+     * Provides a singleton instance of [LocalUserManager].
+     *
+     * @param application The application context.
+     * @return A singleton instance of [LocalUserManager].
+     */
     @Provides
     @Singleton
     fun provideLocalUserManager(
         application: Application
     ): LocalUserManager = LocalUserManagerImpl(context = application)
 
+    /**
+     * Provides a singleton instance of [AppEntryUseCases].
+     *
+     * @param localUserManager The local user manager.
+     * @return A singleton instance of [AppEntryUseCases].
+     */
     @Provides
     @Singleton
     fun provideAppEntryUseCases(
@@ -49,6 +73,11 @@ object AppModule {
         saveAppEntry = SaveAppEntry(localUserManager = localUserManager)
     )
 
+    /**
+     * Provides a singleton instance of [NewsApi].
+     *
+     * @return A singleton instance of [NewsApi].
+     */
     @Provides
     @Singleton
     fun provideNewsApi(): NewsApi {
@@ -59,6 +88,13 @@ object AppModule {
             .create(NewsApi::class.java)
     }
 
+    /**
+     * Provides a singleton instance of [NewsRepository].
+     *
+     * @param newsApi The News API service.
+     * @param newsDao The DAO for local news storage.
+     * @return A singleton instance of [NewsRepository].
+     */
     @Provides
     @Singleton
     fun provideNewsRepository(
@@ -70,6 +106,12 @@ object AppModule {
             newsDao = newsDao
         )
 
+    /**
+     * Provides a singleton instance of [NewsUseCases].
+     *
+     * @param newsRepository The repository for news data.
+     * @return A singleton instance of [NewsUseCases].
+     */
     @Provides
     @Singleton
     fun provideNewsUseCases(newsRepository: NewsRepository): NewsUseCases {
@@ -83,6 +125,12 @@ object AppModule {
         )
     }
 
+    /**
+     * Provides a singleton instance of [NewsDatabase].
+     *
+     * @param application The application context.
+     * @return A singleton instance of [NewsDatabase].
+     */
     @Provides
     @Singleton
     fun provideNewsDatabase(
@@ -97,6 +145,12 @@ object AppModule {
             .build()
     }
 
+    /**
+     * Provides a singleton instance of [NewsDao].
+     *
+     * @param newsDatabase The database for news storage.
+     * @return A singleton instance of [NewsDao].
+     */
     @Provides
     @Singleton
     fun provideNewsDao(

@@ -1,3 +1,7 @@
+/*
+ * This file is part of the NewsApp application.
+ * It defines the HomeScreen composable, responsible for rendering the Home screen UI.
+ */
 package com.example.newsapp.presentation.home
 
 import androidx.compose.animation.core.LinearEasing
@@ -33,6 +37,15 @@ import com.example.newsapp.presentation.common.ArticlesList
 import com.example.newsapp.presentation.common.SearchBar
 import kotlinx.coroutines.delay
 
+/**
+ * Composable function representing the Home screen UI in the NewsApp application.
+ *
+ * @param state The current state of the Home screen.
+ * @param event Function to handle events triggered by user interactions on the Home screen.
+ * @param articles LazyPagingItems representing the list of news articles to be displayed.
+ * @param navigateToSearch Function to navigate to the search screen.
+ * @param navigateToDetails Function to navigate to the details screen for a specific article.
+ */
 @Composable
 fun HomeScreen(
     state: HomeState,
@@ -41,6 +54,7 @@ fun HomeScreen(
     navigateToSearch: () -> Unit,
     navigateToDetails: (Article) -> Unit
 ) {
+    // Calculate titles for horizontal scrolling based on the first 10 articles
     val titles by remember {
         derivedStateOf {
             if (articles.itemCount > 10) {
@@ -79,13 +93,16 @@ fun HomeScreen(
         )
         Spacer(modifier = Modifier.height(MediumPadding1))
 
+        // Horizontal scrolling text with article titles
         val scrollState = rememberScrollState()
         LaunchedEffect(key1 = scrollState.maxValue) {
             delay(500)
             if (scrollState.maxValue > 0) {
+                // Animate scrolling to the maximum value with infinite repetition
                 scrollState.animateScrollTo(
                     value = scrollState.maxValue,
                     animationSpec = infiniteRepeatable(
+                        // Tween animation with specific duration, easing, and delay
                         tween(
                             durationMillis = (scrollState.maxValue - scrollState.value) * 80_000 / scrollState.maxValue,
                             easing = LinearEasing,
@@ -95,12 +112,20 @@ fun HomeScreen(
                 )
             }
         }
+        // LaunchedEffect to handle the maximum scroll value change event
         LaunchedEffect(key1 = state.maxScrollValue) {
+            // Trigger the HomeEvent to update the maximum scroll value
             event(HomeEvent.UpdateMaxScrollValue(state.maxScrollValue))
         }
+        // LaunchedEffect to handle the current scroll value change event
         LaunchedEffect(key1 = state.scrollValue) {
+            // Trigger the HomeEvent to update the current scroll value
             event(HomeEvent.UpdateScrollValue(state.scrollValue))
         }
+        /*
+         * The Text composable displays horizontally scrolling titles.
+         * It uses the horizontalScroll modifier with the scrollState to enable horizontal scrolling.
+         */
         Text(
             modifier = Modifier
                 .fillMaxWidth()

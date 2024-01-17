@@ -8,6 +8,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.newsapp.R
 
+// Font Family used in application
 val Poppins = FontFamily(
     fonts = listOf(
         Font(R.font.poppins_regular, FontWeight.Normal),
@@ -18,6 +19,7 @@ val Poppins = FontFamily(
 
 // Set of Material typography styles to start with
 val Typography = Typography(
+    // Typographies used in application
     displaySmall = TextStyle(
         fontSize = 24.sp,
         fontFamily = Poppins,

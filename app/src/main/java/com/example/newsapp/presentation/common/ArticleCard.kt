@@ -1,3 +1,7 @@
+/*
+ * This file is part of the NewsApp application.
+ * It defines the ArticleCard composable function, responsible for rendering a card representing an article.
+ */
 package com.example.newsapp.presentation.common
 
 import android.content.res.Configuration
@@ -36,6 +40,14 @@ import com.example.newsapp.presentation.Dimens.ExtraSmallPadding2
 import com.example.newsapp.presentation.Dimens.SmallIconSize
 import com.example.newsapp.ui.theme.NewsAppTheme
 
+
+/**
+ * Composable function for rendering a card representing an article.
+ *
+ * @param modifier The modifier for styling or layout customization.
+ * @param article The article to be displayed in the card.
+ * @param onClick The callback function invoked when the card is clicked.
+ */
 @Composable
 fun ArticleCard(
     modifier: Modifier = Modifier,

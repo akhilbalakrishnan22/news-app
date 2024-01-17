@@ -1,3 +1,7 @@
+/*
+ * This file is part of the NewsApp application.
+ * It defines the PageIndicator composable, responsible for rendering a visual indicator for onboarding pages.
+ */
 package com.example.newsapp.presentation.onboarding.components
 
 import androidx.compose.foundation.background
@@ -14,6 +18,15 @@ import androidx.compose.ui.graphics.Color
 import com.example.newsapp.presentation.Dimens.IndicatorSize
 import com.example.newsapp.ui.theme.BlueGray
 
+/**
+ * Composable function representing a visual page indicator for onboarding screens.
+ *
+ * @param modifier The modifier for styling and layout customization.
+ * @param pageSize The total number of pages in the onboarding screen.
+ * @param selectedPage The index of the currently selected page.
+ * @param selectedColor The color of the indicator for the selected page.
+ * @param unSelectedColor The color of the indicator for unselected pages.
+ */
 @Composable
 fun PageIndicator(
     modifier: Modifier = Modifier,

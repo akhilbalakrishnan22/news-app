@@ -1,3 +1,7 @@
+/*
+ * This file is part of the NewsApp application.
+ * It defines the navigation graph for navigating with in the app after setting the app entry(onboarding).
+ */
 package com.example.newsapp.presentation.news_navigator
 
 import android.widget.Toast
@@ -34,9 +38,13 @@ import com.example.newsapp.presentation.news_navigator.components.NewsBottomNavi
 import com.example.newsapp.presentation.search.SearchScreen
 import com.example.newsapp.presentation.search.SearchViewModel
 
+/**
+ * Composable function representing the main navigation structure for the news section.
+ */
 @Composable
 fun NewsNavigator() {
 
+    // Define bottom navigation items
     val bottomNavigationItems = remember {
         listOf(
             BottomNavigationItem(icon = R.drawable.ic_home, text = "Home"),
@@ -46,11 +54,16 @@ fun NewsNavigator() {
     }
 
     val navController = rememberNavController()
+
+    // Get the current back stack entry for tracking the selected item
     val backStackState = navController.currentBackStackEntryAsState().value
+
+    // Remember the selected item using saveable state
     var selectedItem by rememberSaveable {
         mutableIntStateOf(0)
     }
 
+    // Update the selected item based on the current destination route
     selectedItem = remember(key1 = backStackState) {
         when (backStackState?.destination?.route) {
             Route.HomeScreen.route -> 0
@@ -60,6 +73,7 @@ fun NewsNavigator() {
         }
     }
 
+    // Determine if the bottom navigation bar should be visible based on the current destination
     val isBottomNavigationBarVisible = remember(key1 = backStackState) {
         backStackState?.destination?.route == Route.HomeScreen.route ||
                 backStackState?.destination?.route == Route.SearchScreen.route ||
@@ -95,8 +109,10 @@ fun NewsNavigator() {
             }
         }
     ) {
+        // Calculate bottom padding for the NavHost
         val bottomPadding = it.calculateBottomPadding()
 
+        // NavHost for handling navigation between composables
         NavHost(
             modifier = Modifier.padding(bottom = bottomPadding),
             navController = navController,
@@ -174,6 +190,12 @@ fun NewsNavigator() {
     }
 }
 
+/**
+ * Navigates to a destination when an item in the bottom navigation bar is tapped.
+ *
+ * @param navController NavController to manage navigation.
+ * @param route Destination route to navigate to.
+ */
 private fun navigateOnTap(navController: NavController, route: String) {
     navController.navigate(route) {
         navController.graph.startDestinationRoute?.let { homeScreen ->
@@ -186,6 +208,12 @@ private fun navigateOnTap(navController: NavController, route: String) {
     }
 }
 
+/**
+ * Navigates to the Details screen with the specified article.
+ *
+ * @param navController NavController to manage navigation.
+ * @param article Article to be displayed in the Details screen.
+ */
 private fun navigateToDetails(navController: NavController, article: Article) {
     navController.currentBackStackEntry?.savedStateHandle?.set("article", article)
     navController.navigate(route = Route.DetailsScreen.route)

@@ -1,3 +1,7 @@
+/*
+ * This file is part of the NewsApp application.
+ * It defines the DetailsScreen composable, responsible for rendering the Details screen displaying article details.
+ */
 package com.example.newsapp.presentation.details
 
 import android.content.Intent
@@ -33,6 +37,13 @@ import com.example.newsapp.presentation.Dimens.MediumPadding1
 import com.example.newsapp.presentation.details.components.DetailsTopBar
 import com.example.newsapp.ui.theme.NewsAppTheme
 
+/**
+ * Composable function representing the Details screen displaying article details.
+ *
+ * @param article The article object containing details to be displayed.
+ * @param event Callback function to handle Details events.
+ * @param navigateUp Callback function to navigate back to the previous screen.
+ */
 @Composable
 fun DetailsScreen(
     article: Article,
@@ -46,6 +57,7 @@ fun DetailsScreen(
             .fillMaxSize()
             .statusBarsPadding()
     ) {
+        // Top app bar for the Details screen, with actions for browsing, sharing, bookmarking, and back navigation
         DetailsTopBar(
             onBrowsingClick = {
                 Intent(Intent.ACTION_VIEW).also {
