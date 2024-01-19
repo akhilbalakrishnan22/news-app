@@ -17,10 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import com.example.newsapp.data.manager.NewsConnectivityManager
 import com.example.newsapp.presentation.navgraph.NavGraph
 import com.example.newsapp.ui.theme.NewsAppTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * Main activity of the NewsApp application.
@@ -31,6 +33,10 @@ class MainActivity : ComponentActivity() {
 
     // ViewModel for MainActivity
     private val viewModel by viewModels<MainViewModel>()
+
+    // Property for managing connectivity to the application.
+    @Inject
+    lateinit var newsConnectivityManager: NewsConnectivityManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,8 +77,11 @@ class MainActivity : ComponentActivity() {
                     // Define the starting destination for the navigation graph
                     val startDestination = viewModel.startDestination
 
-                    // Create and display the navigation graph
-                    NavGraph(startDestination = startDestination)
+                    // Create and display the navigation graph also it takes the object of NewsConnectivityManager to monitor the network state.
+                    NavGraph(
+                        startDestination = startDestination,
+                        newsConnectivityManager = newsConnectivityManager
+                    )
                 }
             }
         }

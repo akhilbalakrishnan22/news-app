@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.example.newsapp.data.manager.NewsConnectivityManager
 import com.example.newsapp.presentation.news_navigator.NewsNavigator
 import com.example.newsapp.presentation.onboarding.OnBoardingScreen
 import com.example.newsapp.presentation.onboarding.OnBoardingViewModel
@@ -18,10 +19,12 @@ import com.example.newsapp.presentation.onboarding.OnBoardingViewModel
  * Composable function defining the navigation graph for the app.
  *
  * @param startDestination The starting destination of the navigation graph.
+ * @param newsConnectivityManager An instance of [NewsConnectivityManager] to monitor internet connectivity.
  */
 @Composable
 fun NavGraph(
-    startDestination: String
+    startDestination: String,
+    newsConnectivityManager: NewsConnectivityManager
 ) {
     // Create a navigation controller to manage navigation within the graph
     val navController = rememberNavController()
@@ -51,7 +54,7 @@ fun NavGraph(
             composable(
                 route = Route.NewsNavigatorScreen.route
             ) {
-                NewsNavigator()
+                NewsNavigator(newsConnectivityManager = newsConnectivityManager)
             }
         }
     }

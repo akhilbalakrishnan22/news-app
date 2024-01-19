@@ -8,14 +8,20 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
@@ -24,6 +30,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.newsapp.R
+import com.example.newsapp.data.manager.ConnectionState
+import com.example.newsapp.data.manager.NewsConnectivityManager
 import com.example.newsapp.domain.models.Article
 import com.example.newsapp.presentation.bookmark.BookmarkScreen
 import com.example.newsapp.presentation.bookmark.BookmarkViewModel
@@ -37,12 +45,17 @@ import com.example.newsapp.presentation.news_navigator.components.BottomNavigati
 import com.example.newsapp.presentation.news_navigator.components.NewsBottomNavigation
 import com.example.newsapp.presentation.search.SearchScreen
 import com.example.newsapp.presentation.search.SearchViewModel
+import kotlinx.coroutines.launch
 
 /**
  * Composable function representing the main navigation structure for the news section.
+ *
+ * @param newsConnectivityManager An instance of [NewsConnectivityManager] to monitor internet connectivity.
  */
 @Composable
-fun NewsNavigator() {
+fun NewsNavigator(
+    newsConnectivityManager: NewsConnectivityManager
+) {
 
     // Define bottom navigation items
     val bottomNavigationItems = remember {
@@ -80,7 +93,34 @@ fun NewsNavigator() {
                 backStackState?.destination?.route == Route.BookmarkScreen.route
     }
 
+    val coroutineScope = rememberCoroutineScope()
+    // Create a SnackBarHostState to manage and display SnackBars
+    val snackBarHostState = remember { SnackbarHostState() }
+    val noInternetConnectionText = stringResource(id = R.string.no_internet_connection)
+
+    // Collect internet connectivity state and show SnackBar when there is no internet
+    LaunchedEffect(key1 = true) {
+        newsConnectivityManager.connectionState.collect { connectionState ->
+            when (connectionState) {
+                is ConnectionState.Connected -> snackBarHostState.currentSnackbarData?.dismiss()
+
+                is ConnectionState.NoInternet -> {
+                    coroutineScope.launch {
+                        // Show SnackBar when there is no internet connection
+                        snackBarHostState.showSnackbar(
+                            message = noInternetConnectionText,
+                            duration = SnackbarDuration.Indefinite
+                        )
+                    }
+                }
+
+                is ConnectionState.Unknown -> snackBarHostState.currentSnackbarData?.dismiss()
+            }
+        }
+    }
+
     Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
             if (isBottomNavigationBarVisible) {

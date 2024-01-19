@@ -10,6 +10,7 @@ import com.example.newsapp.data.local.NewsDao
 import com.example.newsapp.data.local.NewsDatabase
 import com.example.newsapp.data.local.NewsTypeConverter
 import com.example.newsapp.data.manager.LocalUserManagerImpl
+import com.example.newsapp.data.manager.NewsConnectivityManager
 import com.example.newsapp.data.remote.NewsApi
 import com.example.newsapp.data.repository.NewsRepositoryImpl
 import com.example.newsapp.domain.manager.LocalUserManager
@@ -156,5 +157,17 @@ object AppModule {
     fun provideNewsDao(
         newsDatabase: NewsDatabase
     ): NewsDao = newsDatabase.newsDao
+
+    /**
+     * Provides a singleton instance of [NewsConnectivityManager].
+     *
+     * @param application The Android [Application] instance, typically injected by Dagger.
+     * @return A singleton instance of [NewsConnectivityManager] initialized with the provided [application] context.
+     */
+    @Provides
+    @Singleton
+    fun provideNewsConnectivityManager(
+        application: Application
+    ): NewsConnectivityManager = NewsConnectivityManager(context = application)
 
 }
