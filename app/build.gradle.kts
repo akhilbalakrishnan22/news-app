@@ -97,7 +97,7 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
 
     //Compose Navigation
-    implementation("androidx.navigation:navigation-compose:2.7.6")
+    implementation("androidx.navigation:navigation-compose:2.7.7")
 
     //Dagger Hilt
     implementation("com.google.dagger:hilt-android:2.50")
