@@ -97,7 +97,7 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
 
     //Compose Navigation
-    implementation("androidx.navigation:navigation-compose:2.7.6")
+    implementation("androidx.navigation:navigation-compose:2.7.7")
 
     //Dagger Hilt
     implementation("com.google.dagger:hilt-android:2.50")
@@ -115,7 +115,7 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     //Compose Foundation
-    implementation("androidx.compose.foundation:foundation:1.5.4")
+    implementation("androidx.compose.foundation:foundation:1.6.1")
 
     //Accompanist System UI Controller
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.32.0")
